@@ -20,11 +20,11 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@PostMapping(path="/login")
-	public @ResponseBody User login(@RequestParam(name="username") String username, 
-			@RequestParam(name="password") String password) {
-		
-		return userService.login(username,password);
-	}
+//	@PostMapping(path="/login")
+//	public @ResponseBody User login(@RequestParam(name="username") String username, 
+//			@RequestParam(name="password") String password) {
+//		
+//		return userService.login(username,password);
+//	}
 	
 }

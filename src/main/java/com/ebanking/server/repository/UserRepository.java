@@ -9,7 +9,7 @@ import com.ebanking.server.model.User;
 
 public interface UserRepository extends JpaRepository<User, Integer>{
 
-	@Query("SELECT u FROM User as u WHERE (u.username=:username) AND (u.password=password)")
-	User login(String username, String password);
+	@Query("SELECT u FROM User as u WHERE (u.username=:username) AND (u.password=:password)")
+	List<User> login(String username, String password);
 
 }

@@ -15,8 +15,13 @@ public class UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
-
-	public User login(String username, String password) {
+//
+//	public List<User> login(User user) {
+//		return userRepository.login(user.getUsername(),user.getPassword());
+//	}
+	
+	public List<User> login(String username, String password) {
+		System.out.println("OK");
 		return userRepository.login(username,password);
 	}
 	

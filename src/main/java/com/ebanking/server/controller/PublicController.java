@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ebanking.server.dto.AuthenticationResponseDto;
 import com.ebanking.server.dto.CommonResponseDto;
 import com.ebanking.server.dto.UserCreateDto;
 import com.ebanking.server.dto.UserReadDto;
@@ -30,8 +31,8 @@ public class PublicController {
 	@Autowired
 	private UserService userService;
 	
-//	@Autowired
-//	private ModelMapper modelMapper;
+	@Autowired
+	private ModelMapper modelMapper;
 	
 
 	
@@ -41,13 +42,15 @@ public class PublicController {
 		public @ResponseBody ResponseEntity<Object> logUser(@RequestBody UserCreateDto userCreateDto) {
 		HttpHeaders responseHeaders = new HttpHeaders();
 	    responseHeaders.set("Access-Control-Allow-Origin", "Access-Control-Allow-Origin");
-//		return ResponseEntity.ok(CommonResponseDto.builder()
-//				.code(Integer.valueOf(HttpStatus.OK.value()))
-//				.message(HttpStatus.OK.getReasonPhrase())
-//				.data(userService.login(userCreateDto.getUsername(), userCreateDto.getPassword()))
-//				.build());
+	    User user =userService.login(userCreateDto.getUsername(), userCreateDto.getPassword());
+	    UserReadDto userReadDto = userService.getUserReadDto(user);
+		return ResponseEntity.ok(CommonResponseDto.builder()
+				.code(Integer.valueOf(HttpStatus.OK.value()))
+				.message(HttpStatus.OK.getReasonPhrase())
+				.data(new AuthenticationResponseDto(userReadDto))
+				.build());
 //		return userService.login(userCreateDto.getUsername(),userCreateDto.getPassword());
-		return ResponseEntity.ok().body(userService.login(userCreateDto.getUsername(),userCreateDto.getPassword()));
+//		return ResponseEntity.ok().body(userService.login(userCreateDto.getUsername(),userCreateDto.getPassword()));
 //		return ResponseEntity.ok(CommonResponseDto.builder()
 //				.code(Integer.valueOf(HttpStatus.OK.value()))
 //				.message(HttpStatus.OK.getReasonPhrase())

@@ -19,14 +19,6 @@ public class UserReadDto{
 
 	private String password;
 
-	private int age;
-					
-	private String marital_status;
-				
-	private boolean employed;
-
-	private double monthly_income;
-
 	private boolean admin;
 	
 }

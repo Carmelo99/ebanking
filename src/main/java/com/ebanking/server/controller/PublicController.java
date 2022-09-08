@@ -60,6 +60,20 @@ public class PublicController {
 		//return userService.login(username,password);
 		
 		
+		
 	}
+		
+		@PostMapping(path = "/logout")
+		public @ResponseBody ResponseEntity<Object> logout() {
+
+			// @formatter:off
+			//TODO delete jwtToken, make list of logout jwtToken
+			return ResponseEntity.ok(CommonResponseDto.builder()
+					.code(Integer.valueOf(HttpStatus.OK.value()))
+					.message(HttpStatus.OK.getReasonPhrase())
+					.data(Boolean.TRUE)
+					.build());
+			// @formatter:on
+		}
 
 }

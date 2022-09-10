@@ -20,7 +20,7 @@ public class Credit {
 	
 	@ManyToOne
 	@JoinColumn(name="credit_type", referencedColumnName = "id")
-	private CreditType credit_type;
+	private CreditType type;
 	
 	private double amount;
 	

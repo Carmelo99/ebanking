@@ -26,7 +26,7 @@ public class Bill {
 	
 	@ManyToOne
 	@JoinColumn(name = "bill_type", referencedColumnName = "id")
-	private BillType bill_type;
+	private BillType type;
 	
 	@NotNull
 	private double amount;

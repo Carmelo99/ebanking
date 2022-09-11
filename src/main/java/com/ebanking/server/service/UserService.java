@@ -1,5 +1,6 @@
 package com.ebanking.server.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -31,6 +32,10 @@ public class UserService {
 	public UserReadDto getUserReadDto(User user) {
 		UserReadDto userReadDto = modelMapper.map(user, UserReadDto.class);
 		return userReadDto;
+	}
+
+	public ArrayList<User> getAllUsers() {
+		return userRepository.getAllUsers();
 	}
 	
 }

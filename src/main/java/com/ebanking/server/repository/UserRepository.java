@@ -13,7 +13,13 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 	@Query("SELECT u FROM User as u WHERE (u.username=:username) AND (u.password=:password)")
 	User login(String username, String password);
 
-	@Query("select u from User as u")
+	@Query("select u from User as u where id<>1")
 	ArrayList<User> getAllUsers();
+
+	@Query("delete from User as u where id=:id")
+	void deleteUserById(int id);
+
+	@Query("select u from User as u where id=:id")
+	User getUserById(int id);
 
 }

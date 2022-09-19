@@ -37,5 +37,32 @@ public class UserService {
 	public ArrayList<User> getAllUsers() {
 		return userRepository.getAllUsers();
 	}
+
+	public void delete(int id) {
+		System.out.println("Obrisano");
+		userRepository.deleteUserById(id);	
+	}
+
+	public void switchIsAdmin(int id, boolean isAdmin) {
+		
+		User user = userRepository.getUserById(id);
+		
+		user.setAdmin(isAdmin);
+		
+		userRepository.save(user);
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

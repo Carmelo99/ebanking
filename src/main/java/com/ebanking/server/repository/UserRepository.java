@@ -22,4 +22,7 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 	@Query("select u from User as u where id=:id")
 	User getUserById(int id);
 
+	@Query("select u from User as u where (u.firstname=:firstname) AND (u.lastname=:lastname)")
+	User getByName(String firstname, String lastname);
+
 }

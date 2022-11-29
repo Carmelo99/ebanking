@@ -2,6 +2,8 @@ package com.ebanking.server.dto;
 
 import java.io.Serializable;
 
+import com.ebanking.server.model.Insurance;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,7 +28,11 @@ public class UserReadDto{
 	private boolean employed;
 	
 	private double monthly_income;
+	
+	private double amount;
 
 	private boolean admin;
+	
+	private Insurance insurance_number;
 	
 }

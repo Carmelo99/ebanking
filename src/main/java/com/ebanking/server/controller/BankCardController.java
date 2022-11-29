@@ -1,9 +1,6 @@
 package com.ebanking.server.controller;
 
-import java.awt.PageAttributes.MediaType;
 import java.util.stream.Collectors;
-
-import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,100 +11,79 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ebanking.server.dto.UserReadDto;
-import com.ebanking.server.dto.UserSwitchToAdminDto;
+import com.ebanking.server.dto.BankCardCreateDto;
+import com.ebanking.server.dto.BankCardReadDto;
+import com.ebanking.server.dto.BillReadDto;
 import com.ebanking.server.dto.CommonResponseDto;
-import com.ebanking.server.model.User;
-import com.ebanking.server.service.UserService;
+import com.ebanking.server.dto.UserReadDto;
+import com.ebanking.server.service.BankCardService;
 
 @RestController
-@RequestMapping("/api/users")
-public class UserController {
+@RequestMapping("/api/bank-card")
+public class BankCardController {
 
 	@Autowired
-	private UserService userService;
-	
-//	@PostMapping(path="/login")
-//	public @ResponseBody User login(@RequestParam(name="username") String username, 
-//			@RequestParam(name="password") String password) {
-//		
-//		return userService.login(username,password);
-//	}
+	private BankCardService bankCardService;
 	
 	@Autowired
 	private ModelMapper modelMapper;
 	
 	
+	@GetMapping(path = "/get-all")
+	public @ResponseBody ResponseEntity<Object> getAllBankCards() {
+		// @formatter:off
+		return ResponseEntity.ok(CommonResponseDto.builder()
+				.code(Integer.valueOf(HttpStatus.OK.value()))
+				.message(HttpStatus.OK.getReasonPhrase())
+				.data(bankCardService.getAllBankCards().stream().map(d -> modelMapper.map(d, BankCardReadDto.class)).collect(Collectors.toList()))
+				.build());
+		// @formatter:on
+	}
+	
+	
 	@GetMapping(path = "/list")
-	public @ResponseBody ResponseEntity<Object> getAllUsers() {
+	public @ResponseBody ResponseEntity<Object> getAllById(
+			@RequestParam(name = "user_id") int userId) {
 		// @formatter:off
 		return ResponseEntity.ok(CommonResponseDto.builder()
 				.code(Integer.valueOf(HttpStatus.OK.value()))
 				.message(HttpStatus.OK.getReasonPhrase())
-				.data(userService.getAllUsers().stream().map(d -> modelMapper.map(d, UserReadDto.class)).collect(Collectors.toList()))
-				.build());
+				.data(bankCardService.getAllByUserId(userId).stream().map(d -> modelMapper.map(d, BankCardReadDto.class)).collect(Collectors.toList())).build());
 		// @formatter:on
 	}
 	
-	@PatchMapping(path = "/switchisadmin/{id}/{isadmin}")
-	public @ResponseBody ResponseEntity<Object> switchStatus(
+	
+	@PatchMapping(path = "/take-card/{id}/{card}")
+	public @ResponseBody ResponseEntity<Object> takeBankCard(
 			@PathVariable(name = "id") int id,
-			@PathVariable(name="isadmin") boolean isadmin
-			//@RequestBody UserSwitchToAdminDto userDto
+			@PathVariable(name="card") int cardNumber
 			)  {
 		// @formatter:off
-		userService.switchIsAdmin(id,isadmin);
+		bankCardService.takeBankCard(id,cardNumber);
 		return ResponseEntity.ok(CommonResponseDto.builder()
 				.code(Integer.valueOf(HttpStatus.OK.value()))
 				.message(HttpStatus.OK.getReasonPhrase())
 				.build());
 		// @formatter:on
 	}
-	
-	@PatchMapping(path = "/transfer-money/{firstname}/{lastname}/{amount}/{user_id}")
-	public @ResponseBody ResponseEntity<Object> transferMoney(
-			@PathVariable(name = "firstname") String firstname,
-			@PathVariable(name="lastname") String lastname,
-			@PathVariable(name="amount") double amount,
-			@PathVariable(name="user_id") int id
-			)  {
-		// @formatter:off
-		userService.transferMoney(firstname,lastname,amount,id);
-		return ResponseEntity.ok(CommonResponseDto.builder()
-				.code(Integer.valueOf(HttpStatus.OK.value()))
-				.message(HttpStatus.OK.getReasonPhrase())
-				.build());
-		// @formatter:on
-	}
-	
-//	@PatchMapping(path = "/switchIsAdmin")
-//	public void switchStatus(
-//			@RequestBody UserSwitchToAdminDto userDto)  {
-//		userService.switchIsAdmin(userDto.getId(),userDto.isAdmin());
-//	}
 	
 	
 	@DeleteMapping(path = "/{id}")
-	public @ResponseBody ResponseEntity<Object> deleteWord(@PathVariable int id) {
+	public @ResponseBody ResponseEntity<Object> deleteBankCard(@PathVariable int id) {
 		// @formatter:off
-		userService.delete(id);
+		bankCardService.deleteBankCard(id);
 		return ResponseEntity.ok(CommonResponseDto.builder()
 				.code(Integer.valueOf(HttpStatus.OK.value()))
 				.message(HttpStatus.OK.getReasonPhrase())
 				.build());
 		// @formatter:on
 	}
-	
-	
-	
-	
 	
 	
 }

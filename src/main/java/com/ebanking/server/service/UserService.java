@@ -54,6 +54,22 @@ public class UserService {
 		
 		
 	}
+
+	public void transferMoney(String firstname, String lastname, double amount, int id) {
+		
+		User u = userRepository.getUserById(id);
+		
+		u.setAmount(u.getAmount()-amount);
+		
+		userRepository.save(u);
+		
+		User user = userRepository.getByName(firstname,lastname);
+		
+		user.setAmount(user.getAmount()+amount);
+		
+		userRepository.save(user);
+		
+	}
 	
 	
 	

@@ -30,7 +30,7 @@ public class User implements Serializable{
 	private String username;
 	@NotNull
 	private String password;
-	@NotNull
+
 	private int age;
 	@NotNull						
 	private String marital_status;
@@ -41,6 +41,10 @@ public class User implements Serializable{
 	@NotNull
 	private boolean admin;
 	
+	private double amount;
 	
+	@ManyToOne
+	@JoinColumn(name="insurance_number",referencedColumnName = "code")
+	private Insurance insurance_number;
 
 }

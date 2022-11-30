@@ -25,6 +25,14 @@ import com.ebanking.server.dto.InsuranceReadDto;
 import com.ebanking.server.model.Insurance;
 import com.ebanking.server.service.InsuranceService;
 
+/**
+ * Klasa koja predstavlja kontrolera za klasu Insurance.
+ * Ona je zaduzena da prima korisnicke zahteve na adresi localhost:8080/api/insurance 
+ * plus odgovarajuci endpoint u zavisnosti od metode. 
+ * 
+ * @author Antonije
+ *
+ */
 @RestController
 @RequestMapping("/api/insurance")
 public class InsuranceController {
@@ -35,7 +43,13 @@ public class InsuranceController {
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	
+	/**
+	 * Metoda koja vraca sva osiguranja.
+	 * Metoda koja se poziva kada se primi get zahtev na endpoint-u /get-all.
+	 * Poziva metodu klase InsuranceService i njen odgovor mapira u odgovarajuci dto.
+	 * 
+	 * @return ResponseEntity genericku klasu, koja predstavlja omotac klasu za serverski odgovor.
+	 */
 	@GetMapping(path = "/get-all")
 	public @ResponseBody ResponseEntity<Object> getAllInsurances() {
 		// @formatter:off
@@ -47,7 +61,14 @@ public class InsuranceController {
 		// @formatter:on
 	}
 	
-	
+	/**
+	 * Metoda koja vraca sva osiguranja za prosledjeni id korisnika.
+	 * Metoda koja se poziva kada se primi get zahtev na endpoint-u /list.
+	 * Poziva metodu klase InsuranceService i njen odgovor mapira u odgovarajuci dto.
+	 * 
+	 * @param userId id korisnika 
+	 * @return ResponseEntity genericku klasu, koja predstavlja omotac klasu za serverski odgovor.
+	 */
 	@GetMapping(path = "/list")
 	public @ResponseBody ResponseEntity<Object> getAllByUserId(
 			@RequestParam(name = "user_id") int userId) {
@@ -59,7 +80,14 @@ public class InsuranceController {
 		// @formatter:on
 	}
 	
-	
+	/**
+	 * Metoda koja dodeljuje osiguranje odredjenom korisniku koji je izabrao to osiguranje.
+	 * Metoda koja se poziva kada se primi patch zahtev na endpoint-u /take-insurance/{id}/{code}.
+	 * 
+	 * @param id id korisnika
+	 * @param code sifra osiguranja
+	 * @return ResponseEntity genericku klasu, koja predstavlja omotac klasu za serverski odgovor.
+	 */
 	@PatchMapping(path = "/take-insurance/{id}/{code}")
 	public @ResponseBody ResponseEntity<Object> takeInsurance(
 			@PathVariable(name = "id") int id,
@@ -74,8 +102,15 @@ public class InsuranceController {
 		// @formatter:on
 	}
 	
+	/**
+	 * Metoda koja brise osiguranje korisnika sa id-om koji je prosledjen.
+	 * Metoda koja se poziva kada se primi delete zahtev na endpoint-u /{id}.
+	 * 
+	 * @param id broj kartice
+	 * @return ResponseEntity genericku klasu, koja predstavlja omotac klasu za serverski odgovor.
+	 */
 	@DeleteMapping(path = "/{id}")
-	public @ResponseBody ResponseEntity<Object> deleteWord(@PathVariable int id) {
+	public @ResponseBody ResponseEntity<Object> deleteInsurance(@PathVariable int id) {
 		// @formatter:off
 		insuranceService.deleteUserInsurance(id);
 		return ResponseEntity.ok(CommonResponseDto.builder()

@@ -14,6 +14,13 @@ import com.ebanking.server.repository.BillRepository;
 import com.ebanking.server.repository.BillTypeRepository;
 import com.ebanking.server.repository.UserRepository;
 
+/**
+ * Klasa koja predstavlja servis za klasu Bill.
+ * Ona obradjuje zahteve prosledjene iz kontrolera Bill.
+ * 
+ * @author Antonije
+ *
+ */
 @Service
 public class BillService {
 
@@ -26,10 +33,23 @@ public class BillService {
 	@Autowired
 	private UserRepository userRepository;
 
+	/**
+	 * Vraca sve racune iz baze na osnovu id-a korisnika.
+	 * 
+	 * @param userId id korisnika
+	 * @return ArrayList<Bill> lista racuna
+	 */
 	public ArrayList<Bill> getAllByUserId(int userId) {
 		return billRepository.getAllByUserId(userId);
 	}
 
+	/**
+	 * Placanje racuna.
+	 * Cuva se novi racun u bazi koji je korisnik platio.
+	 * 
+	 * @param billCreateDto dto za upis racuna u bazu
+	 * @return BillCreateDto dto za upis racuna u bazu
+	 */
 	public BillCreateDto payBill(BillCreateDto billCreateDto)  {
 		
 		try {

@@ -16,6 +16,13 @@ import com.ebanking.server.repository.CreditRepository;
 import com.ebanking.server.repository.CreditTypeRepository;
 import com.ebanking.server.repository.UserRepository;
 
+/**
+ * Klasa koja predstavlja servis za klasu Credit.
+ * Ona obradjuje zahteve prosledjene iz kontrolera Credit.
+ * 
+ * @author Antonije
+ *
+ */
 @Service
 public class CreditService {
 
@@ -28,10 +35,23 @@ public class CreditService {
 	@Autowired
 	private UserRepository userRepository;
 
+	/**
+	 * Vraca sve kredite iz baze na osnovu id-a korisnika.
+	 * 
+	 * @param userId id korisnika
+	 * @return ArrayList<Credit> lista kredita
+	 */
 	public ArrayList<Credit> getAllByUserId(int userId) {
 		return creditRepository.getAllByUserId(userId);
 	}
 
+	/**
+	 * Apliciranje za kredit.
+	 * Cuva se novi kredit u bazi za koji je korisnik aplicirao.
+	 * 
+	 * @param creditCreateDto dto za upis kredita u bazu
+	 * @return CreditCreateDto dto za upis kredita u bazu
+	 */
 	public CreditCreateDto applyForCredit(CreditCreateDto creditCreateDto) {
 		
 		try {

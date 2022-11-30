@@ -1,29 +1,43 @@
 package com.ebanking.server.dto;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Klasa koja se koristi prilikom citanja racuna iz baze.
+ * 
+ * @author Antonije
+ *
+ */
 @Getter
 @Setter
 public class BillCreateDto {
 
-	//@NotBlank(message = "Payment purpose must contain a value")
+	/**
+	 * Svrha uplate kao String.
+	 */
 	private String payment_purpose;
 
-	//@NotBlank(message = "Receiver must contain a value")
+	/**
+	 * Primalac kao String.
+	 */
 	private String receiver;
 	
-	//@NotBlank(message = "Bill type must contain a value")
+	/**
+	 * Tip racuna kao String.
+	 */
 	private String type;
 	
-	//@NotNull(message = "Amount must contain a value")
+	/**
+	 * Iznos racuna kao double.
+	 */
 	private double amount;
 	
-	//@NotBlank(message = "Payment purpose must contain a value")
+	/**
+	 * Id korisnika kao integer.
+	 */
 	private int user_id;
 	
 	

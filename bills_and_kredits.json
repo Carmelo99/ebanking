@@ -1,0 +1,17 @@
+{
+  "credit": {
+    "type": "na 10 godina",
+    "amount": 50000.0,
+    "sender firstname": "Stephen",
+    "sender lastname": "Curry"
+  }
+}{
+  "bill": {
+    "payment_purpose": "placanje racun",
+    "receiver": "FON",
+    "type": "Racun preduzeca",
+    "amount": 2500.0,
+    "sender firstname": "Stephen",
+    "sender lastname": "Curry"
+  }
+}

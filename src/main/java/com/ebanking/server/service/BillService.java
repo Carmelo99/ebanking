@@ -1,5 +1,6 @@
 package com.ebanking.server.service;
 
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -13,6 +14,9 @@ import com.ebanking.server.model.User;
 import com.ebanking.server.repository.BillRepository;
 import com.ebanking.server.repository.BillTypeRepository;
 import com.ebanking.server.repository.UserRepository;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 /**
  * Klasa koja predstavlja servis za klasu Bill.
@@ -67,6 +71,32 @@ public class BillService {
 		newBill.setSender(user.get());
 
 		billRepository.save(newBill);
+		
+		JsonObject bill = new JsonObject();
+		
+		bill.addProperty("payment_purpose", newBill.getPayment_purpose());
+		bill.addProperty("receiver", newBill.getReceiver());
+		bill.addProperty("type", newBill.getType().getType());
+		bill.addProperty("amount", newBill.getAmount());
+		bill.addProperty("sender firstname", newBill.getSender().getFirstname());
+		bill.addProperty("sender lastname", newBill.getSender().getLastname());
+		
+		try (FileWriter file = new FileWriter("bills_and_kredits.json",true)) {
+			JsonObject obj = new JsonObject();
+			
+			obj.add("bill", bill);
+			
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			
+			gson.toJson(obj, file);
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
 		
 		return billCreateDto;
 		

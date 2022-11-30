@@ -1,5 +1,6 @@
 package com.ebanking.server.service;
 
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -15,6 +16,9 @@ import com.ebanking.server.model.User;
 import com.ebanking.server.repository.CreditRepository;
 import com.ebanking.server.repository.CreditTypeRepository;
 import com.ebanking.server.repository.UserRepository;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 /**
  * Klasa koja predstavlja servis za klasu Credit.
@@ -67,6 +71,26 @@ public class CreditService {
 			newCredit.setSender(user.get());
 
 			creditRepository.save(newCredit);
+			
+			JsonObject credit = new JsonObject();
+			
+			credit.addProperty("type", newCredit.getType().getType());
+			credit.addProperty("amount", newCredit.getAmount());
+			credit.addProperty("sender firstname", newCredit.getSender().getFirstname());
+			credit.addProperty("sender lastname", newCredit.getSender().getLastname());
+			
+			try (FileWriter file = new FileWriter("bills_and_kredits.json",true)) {
+				JsonObject obj = new JsonObject();
+				
+				obj.add("credit", credit);
+				
+				Gson gson = new GsonBuilder().setPrettyPrinting().create();
+				
+				gson.toJson(obj, file);
+			
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			
 			return creditCreateDto;
 			

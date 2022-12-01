@@ -28,11 +28,21 @@ class UserTest {
 		u.setId(123);
 		assertEquals(123, u.getId());
 	}
+	
+	@Test
+	void testSetIdZero() {
+		assertThrows(java.lang.RuntimeException.class, ()->u.setId(0));
+	}
 
 	@Test
 	void testSetFirstname() {
 		u.setFirstname("Lazar");
 		assertEquals("Lazar", u.getFirstname());
+	}
+	
+	@Test
+	void testSetFirstnameNull() {
+		assertThrows(java.lang.NullPointerException.class, ()->u.setFirstname(null));
 	}
 
 	@Test
@@ -40,11 +50,21 @@ class UserTest {
 		u.setLastname("Radosavljevic");
 		assertEquals("Radosavljevic", u.getLastname());
 	}
+	
+	@Test
+	void testSetLastnameNull() {
+		assertThrows(java.lang.NullPointerException.class, ()->u.setLastname(null));
+	}
 
 	@Test
 	void testSetUsername() {
 		u.setUsername("admin");
 		assertEquals("admin", u.getUsername());
+	}
+	
+	@Test
+	void testSetUsernameNull() {
+		assertThrows(java.lang.NullPointerException.class, ()->u.setUsername(null));
 	}
 
 	@Test
@@ -52,17 +72,32 @@ class UserTest {
 		u.setPassword("admin");
 		assertEquals("admin", u.getPassword());
 	}
+	
+	@Test
+	void testSetPasswordNull() {
+		assertThrows(java.lang.NullPointerException.class, ()->u.setPassword(null));
+	}
 
 	@Test
 	void testSetAge() {
 		u.setAge(25);
 		assertEquals(25, u.getAge());
 	}
+	
+	@Test
+	void testSetAgeNegative() {
+		assertThrows(java.lang.RuntimeException.class, ()->u.setAge(-29));
+	}
 
 	@Test
 	void testSetMarital_status() {
 		u.setMarital_status("single");
 		assertEquals("single", u.getMarital_status());
+	}
+	
+	@Test
+	void testSetMarital_statusNull() {
+		assertThrows(java.lang.NullPointerException.class, ()->u.setMarital_status(null));
 	}
 
 	@Test
@@ -76,6 +111,11 @@ class UserTest {
 		u.setMonthly_income(2500);
 		assertEquals(2500, u.getMonthly_income());
 	}
+	
+	@Test
+	void testSetMonthly_incomeNegative() {
+		assertThrows(java.lang.RuntimeException.class, ()->u.setMonthly_income(-20000));
+	}
 
 	@Test
 	void testSetAdmin() {
@@ -84,11 +124,21 @@ class UserTest {
 	}
 
 	@Test
+	void testSetAmountNegative() {
+		assertThrows(java.lang.RuntimeException.class, ()->u.setAmount(-1000000));
+	}
+	
+	@Test
 	void testSetAmount() {
 		u.setAmount(233.33);
 		assertEquals(233.33, u.getAmount());
 	}
 
+	@Test
+	void testSetInsurance_numberNull() {
+		assertThrows(java.lang.NullPointerException.class, ()->u.setInsurance_number(null));
+	}
+	
 	@Test
 	void testSetInsurance_number() {
 		Insurance i = new Insurance();

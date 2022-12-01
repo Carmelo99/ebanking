@@ -27,6 +27,11 @@ class CreditTest {
 		credit.setId(1);
 		assertEquals(1, credit.getId());
 	}
+	
+	@Test
+	void testSetIdZero() {
+		assertThrows(java.lang.RuntimeException.class, ()->credit.setId(0));
+	}
 
 	@Test
 	void testSetType() {
@@ -35,11 +40,21 @@ class CreditTest {
 		credit.setType(ct);
 		assertEquals(1, credit.getType().getId());
 	}
+	
+	@Test
+	void testSetTypeNull() {
+		assertThrows(java.lang.NullPointerException.class, ()->credit.setType(null));
+	}
 
 	@Test
 	void testSetAmount() {
 		credit.setAmount(25000);
 		assertEquals(25000, credit.getAmount());
+	}
+	
+	@Test
+	void testSetAmountNegative() {
+		assertThrows(java.lang.RuntimeException.class, ()->credit.setAmount(-20000));
 	}
 
 	@Test
@@ -50,6 +65,11 @@ class CreditTest {
 		assertEquals(1, credit.getSender().getId());
 	}
 
+	@Test
+	void testSetSenderNull() {
+		assertThrows(java.lang.NullPointerException.class, ()->credit.setSender(null));
+	}
+	
 	@ParameterizedTest
 	@CsvSource ({
 		"1,2500,1,2500,true",

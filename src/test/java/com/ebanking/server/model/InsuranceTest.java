@@ -27,17 +27,32 @@ class InsuranceTest {
 		i.setCode(1);
 		assertEquals(1, i.getCode());
 	}
+	
+	@Test
+	void testSetCodeZero() {
+		assertThrows(java.lang.RuntimeException.class, ()->i.setCode(0));
+	}
 
 	@Test
 	void testSetInsurance_name() {
 		i.setInsurance_name("DDOR");
 		assertEquals("DDOR", i.getInsurance_name());
 	}
+	
+	@Test
+	void testSetInsurance_nameNull() {
+		assertThrows(java.lang.NullPointerException.class, ()->i.setInsurance_name(null));
+	}
 
 	@Test
 	void testSetInsurance_type() {
 		i.setInsurance_type("Putno osiguranje");
 		assertEquals("Putno osiguranje", i.getInsurance_type());
+	}
+	
+	@Test
+	void testSetInsurance_typeNull() {
+		assertThrows(java.lang.NullPointerException.class, ()->i.setInsurance_type(null));
 	}
 
 	@Test
@@ -46,6 +61,11 @@ class InsuranceTest {
 		company.setCompany_name("Dunav osiguranje");
 		i.setCompany(company);
 		assertEquals("Dunav osiguranje", i.getCompany().getCompany_name());
+	}
+	
+	@Test
+	void testSetCompanyNull() {
+		assertThrows(java.lang.NullPointerException.class, ()->i.setCompany(null));
 	}
 
 	@ParameterizedTest

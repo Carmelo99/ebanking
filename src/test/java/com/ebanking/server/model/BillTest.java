@@ -27,17 +27,32 @@ class BillTest {
 		b.setId(1);
 		assertEquals(1, b.getId());
 	}
+	
+	@Test
+	void testSetIdZero () {
+		assertThrows(java.lang.RuntimeException.class, ()->b.setId(0));
+	}
 
 	@Test
 	void testSetPayment_purpose() {
 		b.setPayment_purpose("racun");
 		assertEquals("racun", b.getPayment_purpose());
 	}
+	
+	@Test
+	void testSetIdPayment_purposeNull () {
+		assertThrows(java.lang.NullPointerException.class, ()->b.setPayment_purpose(null));
+	}
 
 	@Test
 	void testSetReceiver() {
 		b.setReceiver("FON");
 		assertEquals("FON", b.getReceiver());
+	}
+	
+	@Test
+	void testSetReceiverNull () {
+		assertThrows(java.lang.NullPointerException.class, ()->b.setReceiver(null));
 	}
 
 	@Test
@@ -47,11 +62,21 @@ class BillTest {
 		b.setType(bt);
 		assertEquals(1, b.getType().getId());
 	}
+	
+	@Test
+	void testSetTypeNull () {
+		assertThrows(java.lang.NullPointerException.class, ()->b.setType(null));
+	}
 
 	@Test
 	void testSetAmount() {
 		b.setAmount(2500);
 		assertEquals(2500, b.getAmount());
+	}
+	
+	@Test
+	void testSetAmountNegative () {
+		assertThrows(java.lang.RuntimeException.class, ()->b.setAmount(-1000));
 	}
 
 	@Test
@@ -60,6 +85,11 @@ class BillTest {
 		u.setId(1);
 		b.setSender(u);
 		assertEquals(1, b.getSender().getId());
+	}
+	
+	@Test
+	void testSetSenderNull () {
+		assertThrows(java.lang.NullPointerException.class, ()->b.setSender(null));
 	}
 
 	@ParameterizedTest

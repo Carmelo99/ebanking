@@ -27,11 +27,21 @@ class BillTypeTest {
 		bt.setId(1);
 		assertEquals(1, bt.getId());
 	}
+	
+	@Test
+	void testSetIdZero() {
+		assertThrows(java.lang.RuntimeException.class, ()->bt.setId(0));
+	}
 
 	@Test
 	void testSetType() {
 		bt.setType("prvitip");
 		assertEquals("prvitip", bt.getType());
+	}
+	
+	@Test
+	void testSetTypeNull() {
+		assertThrows(java.lang.NullPointerException.class, ()->bt.setType(null));
 	}
 
 	@ParameterizedTest

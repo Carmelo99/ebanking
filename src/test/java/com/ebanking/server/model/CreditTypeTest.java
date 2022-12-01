@@ -27,11 +27,21 @@ class CreditTypeTest {
 		ct.setId(1);
 		assertEquals(1, ct.getId());
 	}
+	
+	@Test
+	void testSetIdZero() {
+		assertThrows(java.lang.RuntimeException.class, ()->ct.setId(0));
+	}
 
 	@Test
 	void testSetType() {
 		ct.setType("10 godina");
 		assertEquals("10 godina", ct.getType());
+	}
+	
+	@Test
+	void testSetTypeNull() {
+		assertThrows(java.lang.NullPointerException.class, ()->ct.setType(null));
 	}
 
 	@ParameterizedTest
@@ -46,7 +56,7 @@ class CreditTypeTest {
 		ct.setType(type1);
 		CreditType ct2 = new CreditType();
 		ct2.setId(id2);
-		ct.setType(type2);
+		ct2.setType(type2);
 		assertEquals(eq, ct.equals(ct2));
 	}
 

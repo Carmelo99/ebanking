@@ -28,11 +28,21 @@ class InsuranceCompanyTest {
 		ic.setTin(1233);
 		assertEquals(1233, ic.getTin());
 	}
+	
+	@Test
+	void testSetTinZero() {
+		assertThrows(java.lang.RuntimeException.class, ()->ic.setTin(0));
+	}
 
 	@Test
 	void testSetCompany_name() {
 		ic.setCompany_name("Kompanija 1");
 		assertEquals("Kompanija 1", ic.getCompany_name());
+	}
+	
+	@Test
+	void testSetCompany_nameNull() {
+		assertThrows(java.lang.NullPointerException.class, ()->ic.setCompany_name(null));
 	}
 
 	@ParameterizedTest

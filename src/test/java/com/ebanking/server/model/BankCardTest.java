@@ -27,12 +27,22 @@ class BankCardTest {
 		bc.setCard_number(255);
 		assertEquals(255, bc.getCard_number());
 	}
+	
+	@Test
+	void testSetCard_numberZero() {
+		assertThrows(java.lang.RuntimeException.class, ()->bc.setCard_number(0));
+	}
 
 	@Test
 	void testSetCard_type() {
 		bc.setCard_type("kreditna");
 		assertEquals("kreditna", bc.getCard_type());
-	}	
+	}
+	
+	@Test
+	void testSetCard_typeNull() {
+		assertThrows(java.lang.NullPointerException.class, ()->bc.setCard_type(null));
+	}
 
 	@Test
 	void testSetCard_owner() {
@@ -40,6 +50,11 @@ class BankCardTest {
 		u.setId(111);
 		bc.setCard_owner(u);
 		assertEquals(111, bc.getCard_owner().getId());
+	}
+	
+	@Test
+	void testSetCard_ownerNull() {
+		assertThrows(java.lang.NullPointerException.class, ()->bc.setCard_owner(null));
 	}
 
 	@ParameterizedTest

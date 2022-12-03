@@ -7,25 +7,38 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.ebanking.server.model.Bill;
+import com.ebanking.server.model.BillType;
 import com.ebanking.server.model.User;
+import com.ebanking.server.repository.BillRepository;
+import com.ebanking.server.repository.BillTypeRepository;
+import com.ebanking.server.repository.UserRepository;
 
+@SpringBootTest
 class BillServiceTest {
 
-	ArrayList<Bill> lista;
+	@Autowired
+	private BillRepository billRepository;
+	
+	@Autowired
+	private BillTypeRepository billTypeRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
+
 	
 	Bill b;
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		lista = new ArrayList<>();
 		b = new Bill();
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
-		lista = null;
 		b = null;
 	}
 
@@ -33,23 +46,17 @@ class BillServiceTest {
 	void testGetAllByUserId() {
 		User u = new User();
 		u.setId(1);
-		b.setId(1);
-		b.setPayment_purpose("racun");
-		b.setSender(u);
-		lista.add(b);
-		assertEquals(1, lista.get(0).getSender().getId());
+		assertEquals(5, billRepository.getAllByUserId(u.getId()).size());
 	}
 
 	@Test
 	void testPayBill() {
-		User u = new User();
-		u.setId(1);
-		b.setId(111);
-		b.setPayment_purpose("racun");
-		lista.add(b);
+		BillType billType = billTypeRepository.getBillTypeByType("Racun preduzeca");
+		User u = userRepository.getUserById(1);
+		b.setType(billType);
 		b.setSender(u);
-		lista.set(0, b);
 		assertEquals(1, b.getSender().getId());
+		assertEquals(1, b.getType().getId());
 	}
 
 }

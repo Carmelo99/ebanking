@@ -7,25 +7,37 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.ebanking.server.model.Credit;
+import com.ebanking.server.model.CreditType;
 import com.ebanking.server.model.User;
+import com.ebanking.server.repository.CreditRepository;
+import com.ebanking.server.repository.CreditTypeRepository;
+import com.ebanking.server.repository.UserRepository;
 
+@SpringBootTest
 class CreditServiceTest {
 
-	ArrayList<Credit> lista;
+	@Autowired
+	private CreditRepository creditRepository;
+	
+	@Autowired
+	private CreditTypeRepository creditTypeRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	Credit c;
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		lista = new ArrayList<>();
 		c = new Credit();
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
-		lista = null;
 		c = null;
 	}
 
@@ -33,22 +45,17 @@ class CreditServiceTest {
 	void testGetAllByUserId() {
 		User u = new User();
 		u.setId(1);
-		c.setId(11);
-		c.setSender(u);
-		lista.add(c);
-		assertEquals(1, lista.get(0).getSender().getId());
+		assertEquals(6, creditRepository.getAllByUserId(u.getId()).size());
 	}
 
 	@Test
 	void testApplyForCredit() {
-		User u = new User();
-		u.setId(1);
-		c.setId(11);
-		c.setAmount(25000);
-		lista.add(c);
+		User u = userRepository.getUserById(1);
+		CreditType ct = creditTypeRepository.getCreditTypeByType("na 20 godina");
+		c.setType(ct);
 		c.setSender(u);
-		lista.set(0, c);
 		assertEquals(1, c.getSender().getId());
+		assertEquals(2, c.getType().getId());
 	}
 
 }

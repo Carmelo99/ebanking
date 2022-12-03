@@ -1,34 +1,37 @@
 package com.ebanking.server.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.ArrayList;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.ebanking.server.model.BankCard;
 import com.ebanking.server.model.User;
+import com.ebanking.server.repository.BankCardRepository;
+import com.ebanking.server.repository.UserRepository;
 
-
+@SpringBootTest
 class BankCardServiceTest {
 	
+	@Autowired
+    private BankCardRepository bankCardRepository;
 
-	
-	ArrayList<BankCard> lista;
+	@Autowired
+    private UserRepository userRepository;
 	
 	BankCard bc;
 
 	@BeforeEach
 	void setUp() throws Exception {
-		lista = new ArrayList<>();
 		bc = new BankCard();
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
-		lista = null;
 		bc = null;
 	}
 
@@ -36,44 +39,27 @@ class BankCardServiceTest {
 	void testGetAllByUserId() {
 		User u = new User();
 		u.setId(1);
-		bc.setCard_number(1);
-		bc.setCard_owner(u);
-		lista.add(bc);
-		assertEquals(1, lista.get(0).getCard_owner().getId());
+		assertEquals(4, bankCardRepository.getAllByUserId(u.getId()).size());
 	}
 
 	@Test
 	void testTakeBankCard() {
-		User u = new User();
-		u.setId(1);
-		bc.setCard_number(123);
-		bc.setCard_type("tip1");
-		lista.add(bc);
+		User u = userRepository.getUserById(1);
+		bc = bankCardRepository.getByCardNumber(123422);
 		bc.setCard_owner(u);
-		lista.set(0, bc);
 		assertEquals(1, bc.getCard_owner().getId());
 	}
+	
 
 	@Test
 	void testGetAllBankCards() {
-		bc.setCard_number(1);
-		bc.setCard_type("tip1");
-		BankCard bc2 = new BankCard();
-		bc2.setCard_number(2);
-		bc2.setCard_type("tip2");
-		lista.add(bc);
-		lista.add(bc2);
-		assertEquals("tip1", lista.get(0).getCard_type());
-		assertEquals("tip2", lista.get(1).getCard_type());
+		assertEquals(4, bankCardRepository.getAllBankCards().size());
 	}
 
 	@Test
 	void testDeleteBankCard() {
-		bc.setCard_number(1);
-		bc.setCard_type("tip1");
-		lista.add(bc);
-		lista.remove(0);
-		assertEquals(0, lista.size());
+		bc = bankCardRepository.getByCardNumber(123422);
+		assertEquals(123422, bc.getCard_number());
 	}
 
 }

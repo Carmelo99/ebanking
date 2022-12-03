@@ -14,4 +14,11 @@
     "sender firstname": "Stephen",
     "sender lastname": "Curry"
   }
+}{
+  "credit": {
+    "type": "na 50 godina",
+    "amount": 70000.0,
+    "sender firstname": "Stephen",
+    "sender lastname": "Curry"
+  }
 }
